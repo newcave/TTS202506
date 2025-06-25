@@ -1,26 +1,19 @@
 import streamlit as st
-from TTS.api import TTS
+from gtts import gTTS
 import os
 
-# 모델 캐싱
-@st.cache_resource
-def load_tts_model():
-    return TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC", progress_bar=False, gpu=False)
+st.set_page_config(page_title="Korean TTS Web App", page_icon="🗣️")
+st.title("🗣️ 텍스트를 음성으로 변환 (gTTS)")
+st.markdown("🔊 입력한 텍스트를 Google TTS로 음성으로 변환합니다.")
 
-st.set_page_config(page_title="Open TTS Demo", page_icon="🎙️")
-st.title("🎙️ 오픈소스 TTS 웹앱")
-st.write("텍스트를 입력하면 음성으로 변환합니다 (powered by Coqui TTS).")
+text = st.text_area("📄 텍스트 입력", "안녕하세요. 이 웹앱은 gTTS 기반입니다.")
 
-# 텍스트 입력
-text_input = st.text_area("텍스트를 입력하세요", "Hello, welcome to the open-source TTS demo.")
-
-# 버튼 클릭 시 처리
-if st.button("🎧 음성 생성"):
-    if text_input.strip() == "":
-        st.warning("텍스트를 입력하세요.")
+if st.button("🎧 음성 생성하기"):
+    if text.strip() == "":
+        st.warning("⚠️ 텍스트를 입력해주세요.")
     else:
-        tts = load_tts_model()
-        output_path = "output.wav"
-        tts.tts_to_file(text=text_input, file_path=output_path)
-        st.audio(output_path, format="audio/wav")
+        tts = gTTS(text, lang="ko")
+        output_path = "output.mp3"
+        tts.save(output_path)
+        st.audio(output_path)
         st.success("✅ 음성이 생성되었습니다!")
