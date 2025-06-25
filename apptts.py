@@ -6,7 +6,7 @@ st.set_page_config(page_title="Korean TTS Web App", page_icon="🗣️")
 st.title("🗣️ 텍스트를 음성으로 변환 (gTTS)")
 st.markdown("🔊 입력한 텍스트를 Google TTS로 음성으로 변환합니다.")
 
-text = st.text_area("📄 텍스트 입력", "안녕하세요. 이 웹앱은 gTTS 기반입니다.")
+text = st.text_area("📄 텍스트 입력", "안녕하세요. K-water AI 랩 입니다.")
 
 if st.button("🎧 음성 생성하기"):
     if text.strip() == "":
